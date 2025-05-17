@@ -1,15 +1,14 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
+from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
 
 model_name = "google/flan-t5-large"
 
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+# T5Tokenizer を使う
+tokenizer = T5Tokenizer.from_pretrained(model_name)
+model = T5ForConditionalGeneration.from_pretrained(model_name)
 
 generator = pipeline("text2text-generation", model=model, tokenizer=tokenizer)
-
-# これで動くはずです
 
 app = FastAPI()
 
