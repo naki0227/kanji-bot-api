@@ -2,11 +2,11 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import pipeline
 
-# from_tf=True を追加！
 generator = pipeline(
     "text2text-generation",
     model="google/flan-t5-large",
-    from_tf=True
+    framework="pt",   # ← PyTorchを明示指定
+    from_pt=True      # ← PyTorchモデルを使う指定
 )
 
 app = FastAPI()
