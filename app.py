@@ -1,12 +1,17 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import pipeline
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
+
+model_name = "google/flan-t5-large"
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 generator = pipeline(
     "text2text-generation",
-    model="google/flan-t5-large",
-    framework="pt",   # ← PyTorchを明示指定
-    from_pt=True      # ← PyTorchモデルを使う指定
+    model=model,
+    tokenizer=tokenizer,
+    framework="pt"  # PyTorchを使う場合
 )
 
 app = FastAPI()
